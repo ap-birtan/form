@@ -110,6 +110,7 @@ input[type=radio]
   opacity: 0;
   height: 100%;
   position: fixed;
+  overflow-y: scroll;
   background-color: #008080;
   top: 0;
   transition: 300ms;
