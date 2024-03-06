@@ -13,15 +13,15 @@
 
 
 
-<div style="width: 80%;">
+<div style="width: 100%; margin-top: 7%; overflow: auto;">
 <table id="tab" border="1">
-<th id="thh">Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>
-</table>
+<tr style=" position: sticky;"><th id="thh">Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>
+<tr></table>
 	
 </div>
 <div id="side">
 
-<label>কার্যালয় অনুযায়ী দেখুনঃ</label><br><br>
+<label>কার্যালয় অনুযায়ী দেখুনঃ</label>
 <select id="center">
 <option value="not_selected">সকল</option>
 <option value="Head Office">বারটান প্রধান কার্যালয়, নারায়ণগঞ্জ</option>
@@ -33,8 +33,9 @@
 <option value="Jhenaidah">বারটান ঝিনাইদহ আঞ্চলিক কার্যালয়</option>
 <option value="Barisal">বারটান বরিশাল আঞ্চলিক কার্যালয়</option>
 </select>
-<hr><br>
-<label>প্রার্থিত অঞ্চল অনুসারে দেখুনঃ</label><br><br>
+
+<label>প্রার্থিত অঞ্চল অনুসারে দেখুনঃ</label>
+<div>
 <label for="division"> বিভাগ</label>
    <select id="division" name="division" onchange="load()">
     <option value="nod">SELECT DIVISION</option>
@@ -47,7 +48,6 @@
       <option value="Mymensing">Mymensing</option>
       <option value="Sylhet">Sylhet</option>
  </select><br>
- <br>
   <label for="">জেলা</label>
   <select id="def">
     <option>First Select Division</option>
@@ -137,24 +137,26 @@
    <option>Habiganj</option>
    <option>Sunamganj</option>
  </select>
- <br><hr><br>
 
-<label>নির্দিষ্ট সময় ব্যবধানে দেখুনঃ</label><br><br>
-<label>শুরু</label>
-<input type="date" name="" id="ts" placeholder="strating date">
-<br><br>
-<label>শেষ</label>
+</div>
+
+<label>নির্দিষ্ট সময় ব্যবধানে দেখুনঃ</label>
+<div>
+<label>Start</label>
+<input type="date" name="" id="ts" placeholder="strating date"><br>
+
+<label>End</label><br>
 <input type="date" name="" id="te" placeholder="ending date">
-<br><br>
-<hr>
-<button id="bth">SORT as ALL CRITERIA</button>
-<br>
-<br>
+</div>
 
-<button id="b">Export as CSV</button><br>
-<br><br>
 
-<button id="r">RESET ALL</button>
+<button id="bth" class="button-name">Sort as All</button><br>
+
+<br>
+<button id="b" class="button-name">Export as CSV</button><br>
+
+<br>
+<button id="r" class="button-name">RESET ALL</button>
 
 </div>
 <script type="module">
@@ -165,7 +167,7 @@
     authDomain: "birtan-67733.firebaseapp.com",
     databaseURL: "https://birtan-67733-default-rtdb.firebaseio.com",
     projectId: "birtan-67733",
-    storageBucket: "birtan-67733.appspot.com",
+    storageBucket: "birtan-67733.appspot.com", 
     messagingSenderId: "275785144912",
     appId: "1:275785144912:web:f0d1dd592102fa3f580f55",
     measurementId: "G-BZ3MBMP9KP"
