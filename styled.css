@@ -93,7 +93,7 @@ input[type=radio]
   opacity: 1;
   position: fixed;
   display: flex;
-  width: 100%;
+  width: 88.2%;
   height: 7%;
   padding :10px;
   background-color: #008080;
@@ -130,8 +130,7 @@ hr
  list-style: none;
  overflow: hidden;
  padding-left: 16px;
- font-size: 80%;
-
+ font-size: 60%;
  padding-right: 16px;
  position: relative;
  text-align: left;
