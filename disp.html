@@ -13,7 +13,7 @@
 
 
 
-<div style="width: 100%; margin-top: 7%; overflow: auto;">
+<div style="width: 100%; margin-top: 4.5%; overflow: auto;">
 <table id="tab" border="1">
 <tr style=" position: sticky;"><th id="thh">Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>
 <tr></table>
@@ -33,9 +33,9 @@
 <option value="Jhenaidah">বারটান ঝিনাইদহ আঞ্চলিক কার্যালয়</option>
 <option value="Barisal">বারটান বরিশাল আঞ্চলিক কার্যালয়</option>
 </select>
-
+<hr>
 <label>প্রার্থিত অঞ্চল অনুসারে দেখুনঃ</label>
-<div>
+
 <label for="division"> বিভাগ</label>
    <select id="division" name="division" onchange="load()">
     <option value="nod">SELECT DIVISION</option>
@@ -137,19 +137,17 @@
    <option>Habiganj</option>
    <option>Sunamganj</option>
  </select>
+<hr>
 
-</div>
 
 <label>নির্দিষ্ট সময় ব্যবধানে দেখুনঃ</label>
-<div>
-<label>Start</label>
-<input type="date" name="" id="ts" placeholder="strating date"><br>
 
-<label>End</label><br>
-<input type="date" name="" id="te" placeholder="ending date">
-</div>
+<label for="ts" style="margin-right: 0;">শুরু</label>
+<input type="date" name="" id="ts">
+<label for="te" style="margin-right: 0;">শেষ</label>
+<input type="date" name="" id="te">
 
-
+<hr>
 <button id="bth" class="button-name">Sort as All</button><br>
 
 <br>
@@ -175,6 +173,7 @@
 firebase.initializeApp(firebaseConfig);
 
 function load_tot(){
+  document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>";
 var rf=firebase.database().ref("trainee"); 
 rf.once('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
