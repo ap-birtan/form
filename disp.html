@@ -5,14 +5,14 @@
 
 <link rel="stylesheet" type="text/css" href="styled.css">
 </head>
-<body>
+<body style="">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script> 
 <script type="text/javascript" src="code.js"></script>
 
 
 
 
-
+<div style="width: 90%;margin-left: 5%;">
 <div style="width: 100%; margin-top: 4.5%; overflow: auto;">
 <table id="tab" border="1">
 <tr style=" position: sticky;"><th id="thh">Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>
@@ -157,6 +157,8 @@
 <button id="r" class="button-name">RESET ALL</button>
 
 </div>
+
+</div>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getDatabase,ref,set,get,child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -184,6 +186,7 @@ rf.once('value', function(snapshot) {
 });
 
 }
+
 
 load_tot();
 
