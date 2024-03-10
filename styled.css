@@ -6,7 +6,7 @@ input[type=text], select {
   margin-left: 0.5%;
   border-radius: 4px;
   height: 80%;
-
+  width: 15%;
   font-size: 60%;
   text-align: center;
   box-sizing: border-box;
@@ -89,20 +89,32 @@ input[type=radio]
 #side
 {
  
-  overflow-x: auto;
+  
   opacity: 1;
   position: fixed;
   display: flex;
   width: 88.2%;
-  height: 10%;
-  padding: 10px;
+  height: 7%;
+  overflow-x: auto;
+  padding :10px;
   background-color: #008080;
   top: 0;
   transition: 300ms;
 }
-#side:hover
+
+#foot
 {
-  opacity: 1;
+  position: fixed;
+  display: flex;
+  width: 88.2%;
+  height: 7%;
+  top: 8%;
+  overflow-x: auto;
+  padding :10px;
+  background-color: #008080;
+
+
+
 }
 
 
@@ -123,14 +135,14 @@ hr
  display: inline-flex;
  font-family: "JetBrains Mono",monospace;
  height: 80%;
- margin-left: 0.5%;
- width: 5%;
+ margin-left: 2.5%;
+ width: 30%;
  justify-content: center;
  line-height: 1;
  list-style: none;
  overflow: hidden;
  padding-left: 16px;
- font-size: 60%;
+ font-size: 100%;
  padding-right: 16px;
  position: relative;
  text-align: left;
