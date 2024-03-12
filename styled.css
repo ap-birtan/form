@@ -94,9 +94,9 @@ input[type=radio]
   position: fixed;
   display: flex;
   width: 88.2%;
-  height: 7%;
+  height: 8%;
   overflow-x: auto;
-  padding :10px;
+  padding: 10px;
   background-color: #008080;
   top: 0;
   transition: 300ms;
