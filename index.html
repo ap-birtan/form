@@ -217,10 +217,19 @@ function val_nid(nid)
     return false;
   }
 
+ else
+  {
+   if(nid.match(/\d/g).length===10||nid.match(/\d/g).length===13||nid.match(/\d/g).length===17)
+  {
+      
+    return true;
+  }
   else
   {
+    alert("সঠিক ভাবে NID ঘরটি পূরণ করুন");
+  }
     
-    return true;
+    
   }
 }
 function insert()
