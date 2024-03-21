@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+  <title></title>
 
 <link rel="stylesheet" type="text/css" href="styled.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body style="">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script> 
@@ -157,8 +158,8 @@
 </div>
 <div style="width: 100%; margin-top: 10.5%; overflow: auto;">
 <table id="tab" border="1">
-<tr style=" position: sticky;"><th id="thh">Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>
-<tr></table>
+<tr><th id="thh">Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>
+<th>Action</th></tr></table>
   
 </div>
 
@@ -179,10 +180,11 @@
 firebase.initializeApp(firebaseConfig);
 
 function load_tot(){
-  document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>";
+ 
 var rf=firebase.database().ref("trainee"); 
 rf.once('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
+      
       var cd = childSnapshot.val();
  
        rows(cd);
@@ -191,12 +193,46 @@ rf.once('value', function(snapshot) {
 
 }
 
+function load_head()
+{
+  document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th><th>Action</th>";
 
+}
 load_tot();
+
+
+
+function dell(nid)
+{
+  var rf=firebase.database().ref("trainee");
+      rf.once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          var cd = childSnapshot.val();
+    if(cd.NID==nid)
+         
+         {
+
+            // console.log(childSnapshot.key);
+             firebase.database().ref("trainee/"+childSnapshot.key).remove();
+             document.getElementById("tab").innerHTML="Loading...";
+             load_head();
+             load_tot();
+         }
+        });
+    }); 
+}
+
+
+
+
+
 
 function rows(cd)
 {
-	document.getElementById("tab").innerHTML+="<tr><td>"+cd.date+"</td><td>"+cd.Name+"</td><td>"+cd.Guardians_name+"</td><td>"+cd.Mobile_Number+"</td><td>"+cd.NID+"</td><td>"+cd.Sex+"</td><td>"+cd.Education+"</td><td>"+cd.Job+"</td><td>"+cd.Division+"</td><td>"+cd.District+"</td><td>"+cd.Upzila+"</td><td>"+cd.Center+"</td></tr>";
+  document.getElementById("tab").innerHTML+="<tr><td>"+cd.date+"</td><td>"+cd.Name+"</td><td>"+cd.Guardians_name+"</td><td>"+cd.Mobile_Number+"</td><td>"+cd.NID+"</td><td>"+cd.Sex+"</td><td>"+cd.Education+"</td><td>"+cd.Job+"</td><td>"+cd.Division+"</td><td>"+cd.District+"</td><td>"+cd.Upzila+"</td><td>"+cd.Center+"</td>"+'<td><button  id="'+cd.NID+'"><i <i class="material-icons">delete</i></button></td></tr>';
+
+   document.getElementById(cd.NID).onclick = () => dell(cd.NID);
+   //textDiv.onclick = () => open_email(emailIndexId)
 
 }
 
@@ -228,17 +264,19 @@ if(document.getElementById("center").value=='not_selected')
 
 else
 {
+  load_head();
       var rf=firebase.database().ref("trainee");
-      document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>";
-
-      var rf=firebase.database().ref("trainee"); 
+     
+      
     rf.once('value', function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
           var cd = childSnapshot.val();
     if(cd.Center==document.getElementById("center").value)
-      rows(cd);
+         
+         {
+          rows(cd);
 
-
+          }
         
         });
     });
@@ -267,9 +305,8 @@ function sort_by_date()
 else
 {
   
-  var rf=firebase.database().ref("trainee");
-  document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>";
-
+  load_head();
+ 
   var rf=firebase.database().ref("trainee"); 
 rf.once('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
@@ -290,10 +327,12 @@ if(com_date(document.getElementById("ts").value,document.getElementById("te").va
 
 }
 
+
 function cen_and_date()
 {
         var rf=firebase.database().ref("trainee");
-        document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>";
+        load_head();
+       
 
             if(document.getElementById("ts").value==''||document.getElementById("te").value=='')
           {
@@ -378,9 +417,9 @@ function reg_cen()
     else
     {
           var rf=firebase.database().ref("trainee");
-          document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>";
+          
 
-          var rf=firebase.database().ref("trainee"); 
+          load_head();
         rf.once('value', function(snapshot) {
             snapshot.forEach(function(childSnapshot) {
               var cd = childSnapshot.val();
@@ -462,9 +501,9 @@ if(document.getElementById("division").value=='nod')
 else
 {
   var rf=firebase.database().ref("trainee");
-  document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>";
+ 
 
-  var rf=firebase.database().ref("trainee"); 
+  load_head();
 rf.once('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       var cd = childSnapshot.val();
@@ -508,5 +547,6 @@ document.getElementById("bth").onclick=cen_and_date;
 
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+<script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 </body>
 </html>
