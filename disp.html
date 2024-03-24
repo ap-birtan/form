@@ -158,8 +158,8 @@
 </div>
 <div style="width: 100%; margin-top: 10.5%; overflow: auto;">
 <table id="tab" border="1">
-<tr><th id="thh">Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>
-<th>Action</th></tr></table>
+
+<tr><th id="thh">Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th></tr></table>
   
 </div>
 
@@ -195,7 +195,7 @@ rf.once('value', function(snapshot) {
 
 function load_head()
 {
-  document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th><th>Action</th>";
+  document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>";
 
 }
 load_tot();
@@ -224,16 +224,17 @@ function dell(nid)
 
 
 
-
+function trt(txt)
+{
+   
+   console.log(txt);
+}
 
 
 function rows(cd)
 {
-  document.getElementById("tab").innerHTML+="<tr><td>"+cd.date+"</td><td>"+cd.Name+"</td><td>"+cd.Guardians_name+"</td><td>"+cd.Mobile_Number+"</td><td>"+cd.NID+"</td><td>"+cd.Sex+"</td><td>"+cd.Education+"</td><td>"+cd.Job+"</td><td>"+cd.Division+"</td><td>"+cd.District+"</td><td>"+cd.Upzila+"</td><td>"+cd.Center+"</td>"+'<td><button  id="'+cd.NID+'"><i <i class="material-icons">delete</i></button></td></tr>';
-
-   document.getElementById(cd.NID).onclick = () => dell(cd.NID);
-   //textDiv.onclick = () => open_email(emailIndexId)
-
+  document.getElementById("tab").innerHTML+='<tr><td>'+cd.date+"</td><td>"+cd.Name+"</td><td>"+cd.Guardians_name+"</td><td>"+cd.Mobile_Number+"</td><td>"+cd.NID+"</td><td>"+cd.Sex+"</td><td>"+cd.Education+"</td><td>"+cd.Job+"</td><td>"+cd.Division+"</td><td>"+cd.District+"</td><td>"+cd.Upzila+"</td><td>"+cd.Center+"</tr>";
+ 
 }
 
 document.getElementById("center").onchange=sort;
@@ -251,7 +252,9 @@ function ExportData(data)
         XLSX.utils.book_append_sheet(wb, ws, "People");
         XLSX.writeFile(wb,filename);
      }
-document.getElementById("b").onclick=exportCSVExcel;
+document.getElementById("b").onclick=toEx;
+
+
 
 
 function sort()
@@ -488,7 +491,22 @@ function exportCSVExcel() {
   window.location.href = encodeURI(sourceData);
 }
 
+function s2ab(s) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+}
 
+function toEx()
+{
+  var table = document.getElementById('tab');
+  var ws = XLSX.utils.table_to_sheet(table);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+  saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'table.xlsx');
+}
 
 function sortreg()
 {
@@ -547,6 +565,7 @@ document.getElementById("bth").onclick=cen_and_date;
 
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
-<script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+
 </body>
 </html>
