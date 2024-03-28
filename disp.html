@@ -18,7 +18,7 @@
   <button id="bth" class="button-name">Sort as All</button><br>
 
 <br>
-<button id="b" class="button-name">Export as EXEL sheet</button><br>
+<button id="b" class="button-name">Export as CSV</button><br>
 
 <br>
 <button id="r" class="button-name">RESET ALL</button>
@@ -43,7 +43,7 @@
 <label>প্রার্থিত অঞ্চল অনুসারে দেখুনঃ</label>
 
 <label for="division"> বিভাগ</label>
-   <select id="division" name="division" onchange="load()">
+   <select id="division" name="division">
     <option value="nod">SELECT DIVISION</option>
       <option value="Dhaka">Dhaka</option>
       <option value="Khulna">Khulna</option>
@@ -180,16 +180,23 @@
 firebase.initializeApp(firebaseConfig);
 
 function load_tot(){
- 
+
+const obs=[];
+
 var rf=firebase.database().ref("trainee"); 
 rf.once('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       
       var cd = childSnapshot.val();
+      obs.push(cd);
+      //console.log(obs[obs.length-1].Name);
  
-       rows(cd);
+       
     });
+    rows(obs);
 });
+
+
 
 }
 
@@ -200,6 +207,10 @@ function load_head()
 }
 load_tot();
 
+function test()
+{
+  console.log(obs[0].Name);
+}
 
 
 function dell(nid)
@@ -223,7 +234,7 @@ function dell(nid)
 }
 
 
-
+//console.log(obs[0].Name);
 function trt(txt)
 {
    
@@ -231,11 +242,19 @@ function trt(txt)
 }
 
 
-function rows(cd)
+function rows(cds)
 {
+  for(var i=cds.length-1;i>=0;i--){
+    var cd=cds[i];
   document.getElementById("tab").innerHTML+='<tr><td>'+cd.date+"</td><td>"+cd.Name+"</td><td>"+cd.Guardians_name+"</td><td>"+cd.Mobile_Number+"</td><td>"+cd.NID+"</td><td>"+cd.Sex+"</td><td>"+cd.Education+"</td><td>"+cd.Job+"</td><td>"+cd.Division+"</td><td>"+cd.District+"</td><td>"+cd.Upzila+"</td><td>"+cd.Center+"</tr>";
+
+
+}
+
  
 }
+
+
 
 document.getElementById("center").onchange=sort;
 document.getElementById("r").onclick=rld;
@@ -259,6 +278,7 @@ document.getElementById("b").onclick=toEx;
 
 function sort()
 {
+  const obs=[];
 if(document.getElementById("center").value=='not_selected')
 {
   load_tot();
@@ -277,11 +297,12 @@ else
     if(cd.Center==document.getElementById("center").value)
          
          {
-          rows(cd);
+          obs.push(cd);
 
           }
         
         });
+        rows(obs);
     });
 
 }
@@ -293,15 +314,80 @@ else
 
 }
 
+function today()
+{
 
+
+
+
+  
+   let tod = new Date().toISOString();
+    let dat=tod.slice(8,10)+'/'+tod.slice(5,7)+'/'+tod.slice(0,4);
+  
+
+  return dat;//+"_"+new Date().toLocaleTimeString();
+
+}
 
 function sort_by_date()
 {
+  const obs=[];
 
 
    if(document.getElementById("ts").value==''||document.getElementById("te").value=='')
 {
+  if(document.getElementById("ts").value=='')
+  {
+                load_head();
+         
+          var rf=firebase.database().ref("trainee"); 
+        rf.once('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+              var cd = childSnapshot.val();
+
+
+        if(com_date('01/01/2023',document.getElementById("te").value,rec(cd.date)))
+          obs.push(cd);
+
+
+
+
+            
+            });
+
+        rows(obs);
+
+        });
+  }
+  else if(document.getElementById("te").value=='')
+  {
+
+        
+                load_head();
+         
+          var rf=firebase.database().ref("trainee"); 
+        rf.once('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+              var cd = childSnapshot.val();
+
+
+        if(com_date(document.getElementById("ts").value,today(),rec(cd.date)))
+          obs.push(cd);
+
+
+
+
+            
+            });
+
+        rows(obs);
+
+        });
+  }
+  else
+  {
   load_tot();
+   }
 }
 
 
@@ -317,11 +403,16 @@ rf.once('value', function(snapshot) {
 
 
 if(com_date(document.getElementById("ts").value,document.getElementById("te").value,rec(cd.date)))
-  rows(cd);
+  obs.push(cd);
+
+
 
 
     
     });
+
+rows(obs);
+
 });
 
 }
@@ -333,6 +424,8 @@ if(com_date(document.getElementById("ts").value,document.getElementById("te").va
 
 function cen_and_date()
 {
+  const obs=[];
+
         var rf=firebase.database().ref("trainee");
         load_head();
        
@@ -358,11 +451,13 @@ function cen_and_date()
 
 
                 if(com_date(document.getElementById("ts").value,document.getElementById("te").value,rec(cd.date))&&cd.Center==document.getElementById("center").value)
-                rows(cd);
+                obs.push(cd);
 
                
               
                  });
+                rows(obs);
+
                });
 
           }
@@ -375,11 +470,12 @@ function cen_and_date()
 
 
                 if(com_date(document.getElementById("ts").value,document.getElementById("te").value,rec(cd.date))&&(cd.Division==document.getElementById("division").value&&cd.District==divdis()))
-                rows(cd);
+                obs.push(cd);
 
                
               
                  });
+                rows(obs);
                });
           }
 
@@ -391,11 +487,12 @@ function cen_and_date()
 
 
                 if(com_date(document.getElementById("ts").value,document.getElementById("te").value,rec(cd.date))&&(cd.Division==document.getElementById("division").value&&cd.District==divdis())&&cd.Center==document.getElementById("center").value)
-                rows(cd);
+                obs.push(cd);
 
                
               
                  });
+                rows(obs);
                });
           }
 
@@ -403,6 +500,9 @@ function cen_and_date()
 
 function reg_cen()
 {
+      const obs=[];
+
+
     if(document.getElementById("center").value=='not_selected'&&document.getElementById("division").value=='nod')
     {
       load_tot();
@@ -427,12 +527,14 @@ function reg_cen()
             snapshot.forEach(function(childSnapshot) {
               var cd = childSnapshot.val();
         if(cd.Center==document.getElementById("center").value&&(cd.Division==document.getElementById("division").value&&cd.District==divdis()))
-               rows(cd);
+               obs.push(cd);
+
 
 
             
             });
         });
+        rows(obs);
 
     }
 
@@ -510,6 +612,7 @@ function toEx()
 
 function sortreg()
 {
+  const obs=[];
 if(document.getElementById("division").value=='nod')
 {
   load_tot();
@@ -526,11 +629,13 @@ rf.once('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       var cd = childSnapshot.val();
 if(cd.Division==document.getElementById("division").value&&cd.District==divdis())
-  rows(cd);
+    obs.push(cd);
 
 
     
     });
+
+    rows(obs);
 });
 
 }
@@ -546,6 +651,39 @@ function divdis()
   let dis=document.getElementById(div.value);
   return dis.value;
 }
+function load()
+{
+
+  let mym=document.getElementById('division').value;
+  invis_all();
+  if(mym!='SELECT DIVISION'){
+  let sub=document.getElementById(mym);
+  
+
+
+    
+  sub.style.display="block";
+}
+else
+document.getElementById("def").style.display="block";
+sortreg();
+
+
+}
+
+ function invis_all()
+ {
+  document.getElementById("Dhaka").style.display="none";
+  document.getElementById("Rajshahi").style.display="none";
+  document.getElementById("Barisal").style.display="none";
+  document.getElementById("Chittagong").style.display="none";
+  document.getElementById("Rangpur").style.display="none";
+  document.getElementById("Sylhet").style.display="none";
+  document.getElementById("Khulna").style.display="none";
+  document.getElementById("Mymensing").style.display="none";
+  document.getElementById("def").style.display="none";
+
+ }
 
 document.getElementById("Dhaka").onchange=sortreg;
 document.getElementById("Rajshahi").onchange=sortreg;
@@ -555,10 +693,14 @@ document.getElementById("Khulna").onchange=sortreg;
 document.getElementById("Mymensing").onchange=sortreg;
 document.getElementById("Sylhet").onchange=sortreg;
 document.getElementById("Barisal").onchange=sortreg;
-
+document.getElementById("division").onchange=load;
 document.getElementById("ts").onchange=sort_by_date;
 document.getElementById("te").onchange=sort_by_date;
 document.getElementById("bth").onclick=cen_and_date;
+
+
+
+
 
 
 
