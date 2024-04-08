@@ -160,7 +160,7 @@
 <div style="width: 100%; margin-top: 11%; overflow: auto;">
 <table id="tab" border="1">
 
-<tr><th id="thh">Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th></tr></table>
+<tr><th>SL.</th><th id="thh">Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th></tr></table>
   
 </div>
 
@@ -203,7 +203,7 @@ rf.once('value', function(snapshot) {
 
 function load_head()
 {
-  document.getElementById("tab").innerHTML="<th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>";
+  document.getElementById("tab").innerHTML="<th>SL.</th><th>Time Stamp</th><th>Name</th><th>Father/Husband</th><th>Mobile Number</th><th>NID no.</th><th>Gender</th><th>Education</th><th>Job</th><th>Division</th><th>District</th><th>Upzilla</th><th>Nearby Center</th>";
 
 }
 load_tot();
@@ -247,7 +247,7 @@ function rows(cds)
 {
   for(var i=cds.length-1;i>=0;i--){
     var cd=cds[i];
-  document.getElementById("tab").innerHTML+='<tr><td>'+cd.date+"</td><td>"+cd.Name+"</td><td>"+cd.Guardians_name+"</td><td>"+cd.Mobile_Number+"</td><td>"+cd.NID+"</td><td>"+cd.Sex+"</td><td>"+cd.Education+"</td><td>"+cd.Job+"</td><td>"+cd.Division+"</td><td>"+cd.District+"</td><td>"+cd.Upzila+"</td><td>"+cd.Center+"</tr>";
+  document.getElementById("tab").innerHTML+='<tr><td>'+(i+1)+'</td><td>'+cd.date+"</td><td>"+cd.Name+"</td><td>"+cd.Guardians_name+"</td><td>"+cd.Mobile_Number+"</td><td>"+cd.NID+"</td><td>"+cd.Sex+"</td><td>"+cd.Education+"</td><td>"+cd.Job+"</td><td>"+cd.Division+"</td><td>"+cd.District+"</td><td>"+cd.Upzila+"</td><td>"+cd.Center+"</tr>";
 
 
 }
