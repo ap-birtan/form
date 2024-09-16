@@ -186,8 +186,9 @@ function load_tot(){
 
 const obs=[];
 
-var rf=firebase.database().ref("trainee"); 
-rf.once('value', function(snapshot) {
+var rf=firebase.database().ref("trainee");
+var lrf=rf.limitToLast(250);  
+lrf.once('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       
       var cd = childSnapshot.val();
